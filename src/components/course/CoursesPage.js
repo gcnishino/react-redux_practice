@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 import * as courseActions from '../../actions/courseActions'
 import {Link} from 'react-router-dom'
 
@@ -9,6 +10,7 @@ class CoursesPage extends Component {
     this.onTitleChange = this.onTitleChange.bind(this)
     this.onClickSave = this.onClickSave.bind(this)
   }
+
   state = {
     course: {title: ''},
   }
@@ -19,7 +21,7 @@ class CoursesPage extends Component {
   }
 
   onClickSave() {
-    this.props.createCourse(this.state.course)
+    this.props.actions.createCourse(this.state.course)
   }
 
   courseRow(course, index) {
@@ -52,7 +54,7 @@ function MapStateToProps(state, ownProps) {
 }
 
 function MapDispatchToProps(dispatch) {
-  return {createCourse: course => dispatch(courseActions.createCourse(course))}
+  return {actions: bindActionCreators(courseActions, dispatch)}
 }
 
 export default connect(MapStateToProps, MapDispatchToProps)(CoursesPage)
