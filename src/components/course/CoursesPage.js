@@ -19,7 +19,7 @@ class CoursesPage extends Component {
   }
 
   onClickSave() {
-    this.props.dispatch(courseActions.createCourse(this.state.course))
+    this.props.createCourse(this.state.course)
   }
 
   courseRow(course, index) {
@@ -31,7 +31,6 @@ class CoursesPage extends Component {
   }
 
   render() {
-    debugger
     return (
       <div className="CoursesPage">
         <h1>Courses</h1>
@@ -49,8 +48,11 @@ class CoursesPage extends Component {
 }
 
 function MapStateToProps(state, ownProps) {
-  debugger
   return {courses: state.courses}
 }
 
-export default connect(MapStateToProps)(CoursesPage)
+function MapDispatchToProps(dispatch) {
+  return {createCourse: course => dispatch(courseActions.createCourse(course))}
+}
+
+export default connect(MapStateToProps, MapDispatchToProps)(CoursesPage)
